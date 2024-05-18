@@ -53,6 +53,6 @@ To get started with this project, clone the repository and follow the instructio
 
 ### Usage
 
-1. Navigate to ```bashhttp://localhost:4200``` in your browser to use the book management interface.
-2. Open ```bashhttp://localhost:8000``` to view the data from the server.
+1. Navigate to ```http://localhost:4200``` in your browser to use the book management interface.
+2. Open ```http://localhost:8000``` to view the data from the server.
 3. In MongoDB Compass, you will see a collection called bookstore where the book data is stored.
