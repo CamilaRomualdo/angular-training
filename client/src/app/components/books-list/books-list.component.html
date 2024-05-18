@@ -1,0 +1,100 @@
+<div class="container">
+  <div class="p-3 mb-3">
+    <p class="h4 text-center">Excel Spreadsheet Export</p>
+    <div class="d-flex flex-column align-items-center gap-2">
+    <div class="d-flex flex-column align-items-center">
+      <div *ngIf="importFileName" class="mb-2">Selected File: {{ importFileName }}</div>
+      <input type="file" (change)="importFromExcel($event)" class="btn btn-primary mb-2 btn-sm" [disabled]="importFileName !== null" />
+    </div>
+    <div class="d-flex flex-wrap justify-content-center gap-2">
+      <button *ngIf="showImportedBooksButton" (click)="openConfirmationModal()" class="btn btn-primary mb-2">View Import</button>
+      <button *ngIf="importFileName" (click)="resetImport()" class="btn btn-warning mb-2">Reset Import</button>
+    </div>
+  </div>
+  </div>
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <p class="h4 mt-3">Books List</p>
+    <div class="gap-3 d-flex align-items-center">
+      <button (click)="exportToExcel()" class="btn btn-success btn-sm mb-2 mt-2">Export to Excel</button>
+      <div class="form-group">
+        <select [(ngModel)]="itemsPerPage" class="form-select" aria-label="Items per page">
+          <option value="5">5 items per page</option>
+          <option value="10">10 items per page</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="table-responsive" *ngIf="!loading; else loadingTemplate">
+    <table class="table table-bordered table-striped" *ngIf="books.length > 0; else noBooksTemplate">
+      <thead class="table-danger">
+        <tr>
+          <th>#</th>
+          <th><input type="checkbox" id="select-all-checkbox" (change)="toggleAllBooks($event)"></th>
+          <th scope="col">Id</th>
+          <th scope="col">Title</th>
+          <th scope="col">Subtitle</th>
+          <th scope="col">Genre</th>
+          <th scope="col">Author</th>
+          <th scope="col">Description</th>
+          <th scope="col">Publisher</th>
+          <th class="text-center" scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let book of books | paginate: { itemsPerPage: itemsPerPage, currentPage: page }; let i = index">
+          <td class="h6">{{ i + 1 }}</td>
+          <td><input type="checkbox" [(ngModel)]="book.selected" (change)="checkIfAllSelected()"></td>
+          <th scope="row">{{ book._id }}</th>
+          <td>{{ book.title }}</td>
+          <td>{{ book.subtitle || 'N/A' }}</td>
+          <td>{{ book.genre || 'N/A' }}</td>
+          <td>{{ book.author }}</td>
+          <td>{{ book.description || 'N/A' }}</td>
+          <td>{{ book.publisher }}</td>
+          <td class="text-center">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+              <button class="btn btn-sm btn-primary" routerLink="/edit-book/{{ book._id }}">Update</button>
+              <button class="btn btn-sm btn-danger" (click)="delete(book._id, i)">Delete</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot *ngIf="selectedCount > 1">
+        <tr>
+          <td colspan="9"></td>
+          <td>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+              <button class="btn btn-danger btn-sm mb-2 mt-2" *ngIf="selectedCount > 1" (click)="deleteSelectedBooks()">Delete All Selected</button>
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+    <pagination-controls (pageChange)="page = $event" class="d-grid d-md-flex justify-content-md-center mt-4"></pagination-controls>
+    <ng-template #noBooksTemplate>
+      <div class="alert alert-warning">No books found.</div>
+    </ng-template>
+    <div class="modal" tabindex="-1" [ngClass]="{'show': isModalOpen}" style="display: block; background: rgba(0, 0, 0, 0.5);" *ngIf="isModalOpen">
+      <div class="modal-dialog" role="document" style="margin: 100px auto; max-width: 500px;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirmação</h5>
+            <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Você tem certeza que deseja substituir todos os dados existentes com os dados importados?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+            <button type="button" class="btn btn-primary" (click)="confirmUpload()">Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #loadingTemplate>
+    <div class="alert alert-info">Loading...</div>
+  </ng-template>
+</div>

@@ -1,0 +1,79 @@
+<div class="container">
+  <div *ngIf="genreData?.length === 0 && publisherData?.length === 0"
+        class="text-center m-2 p-1 pt-3" style="background-color: #f0f0f0;"
+  >
+    <div class="text-center">
+      <p>Not book data found. Try add one in <strong>Add Book</strong>.</p>
+    </div>
+  </div>
+  <div class="chart-container">
+    <div *ngIf="totalBooks > 0 || totalPublishers > 0 || totalAuthors > 0">
+      <p class="h3 text-center mb-5">Summary</p>
+      <div class="d-flex justify-content-center align-items-center">
+        <div class="card mb-4 mx-2" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Total Books</h5>
+            <p class="card-text">{{ totalBooks }}</p>
+          </div>
+        </div>
+
+        <div class="card mb-4 mx-2" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Total Publishers</h5>
+            <p class="card-text">{{ totalPublishers }}</p>
+          </div>
+        </div>
+
+        <div class="card mb-4 mx-2" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Total Authors</h5>
+            <p class="card-text">{{ totalAuthors }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="mb-5">
+    </div>
+    <div *ngIf="genreData?.length" fxLayout="column" fxLayoutAlign="space-around none">
+      <nz-page-header
+        class="site-page-header"
+        nzBackIcon
+        nzTitle="Most Registered Book Genres"
+        nzSubtitle="Books"
+      >
+        <nz-page-header-tags>
+          <nz-tag [nzColor]="'orange'">Vertical Bar</nz-tag>
+        </nz-page-header-tags>
+      </nz-page-header>
+      <div fxFlex>
+        <ngx-charts-bar-vertical
+          [barPadding]="9"
+          [legend]="false"
+          [results]="genreData"
+          [showXAxisLabel]="true"
+          [xAxis]="true"
+          [yAxisLabel]="yAxisLabel"
+        >
+        </ngx-charts-bar-vertical>
+      </div>
+    </div>
+    <div *ngIf="publisherData?.length" fxLayout="column" fxLayoutAlign="space-around none">
+      <nz-page-header
+        class="site-page-header"
+        nzBackIcon
+        nzTitle="Top 5 Book Publishers"
+        nzSubtitle="Books"
+      >
+        <nz-page-header-tags>
+          <nz-tag [nzColor]="'orange'">Tree Map</nz-tag>
+        </nz-page-header-tags>
+      </nz-page-header>
+      <div fxFlex>
+        <ngx-charts-tree-map
+          [gradient]="false"
+          [results]="publisherData"
+        >
+        </ngx-charts-tree-map>
+      </div>
+    </div>
+  </div>
+</div>

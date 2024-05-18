@@ -1,0 +1,40 @@
+<div class="row justify-content-center mt-5">
+  <div class="col-md-8">
+    <h2 class="mb-5">Add Book</h2>
+    <form [formGroup]="bookForm" (ngSubmit)="onSubmit()" class="form mb-5">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" formControlName="title" placeholder="Enter title" [class.is-invalid]="bookForm.get('title')?.touched && bookForm.get('title')?.errors?.['required']">
+        <div *ngIf="bookForm.get('title')?.touched && bookForm.get('title')?.errors?.['required']" class="form-text text-danger" id="titleError">
+          Please enter the title of the book.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="subtitle" class="form-label">Subtitle</label>
+        <input type="text" class="form-control" id="subtitle" formControlName="subtitle" placeholder="Enter subtitle">
+      </div>
+      <div class="mb-3">
+        <label for="genre" class="form-label">Genre</label>
+        <input type="text" class="form-control" id="genre" formControlName="genre" placeholder="Enter genre">
+      </div>
+      <div class="mb-3">
+        <label for="author" class="form-label">Author</label>
+        <input type="text" class="form-control" id="author" formControlName="author" placeholder="Enter author's name" [class.is-invalid]="bookForm.get('author')?.touched && bookForm.get('author')?.errors?.['required']">
+        <div *ngIf="bookForm.get('author')?.touched && bookForm.get('author')?.errors?.['required']" class="form-text text-danger" id="authorError">
+          Missing: author's name. Please fill in.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" formControlName="description" rows="3" placeholder="Enter description"></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="publisher" class="form-label">Publisher</label>
+        <input type="text" class="form-control" id="publisher" formControlName="publisher" placeholder="Enter publisher">
+      </div>
+      <div class="d-grid">
+        <button class="btn btn-success btn-lg" type="submit">Add Book</button>
+      </div>
+    </form>
+  </div>
+</div>

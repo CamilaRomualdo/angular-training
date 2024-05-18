@@ -1,0 +1,48 @@
+<div *ngIf="loading">
+  Loading...
+</div>
+<div *ngIf="!loading">
+  <div class="container">
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-8">
+        <h2 class="mb-5">Update Book Details</h2>
+        <form [formGroup]="bookUpdateForm" (ngSubmit)="onUpdate()">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" formControlName="title" placeholder="Enter book title">
+            <div *ngIf="bookUpdateForm.get('title')?.touched && bookUpdateForm.get('title')?.errors?.['required']" class="text-danger">
+              Title is required.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="subtitle" class="form-label">Subtitle</label>
+            <input type="text" class="form-control" id="subtitle" formControlName="subtitle" placeholder="Enter book subtitle">
+          </div>
+          <div class="mb-3">
+            <label for="genre" class="form-label">Genre</label>
+            <input type="text" class="form-control" id="genre" formControlName="genre" placeholder="Enter book genre">
+          </div>
+          <div class="mb-3">
+            <label for="author" class="form-label">Author</label>
+            <input type="text" class="form-control" id="author" formControlName="author" placeholder="Enter author's name">
+            <div *ngIf="bookUpdateForm.get('author')?.touched && bookUpdateForm.get('author')?.errors?.['required']" class="text-danger">
+              Author is required.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" formControlName="description" rows="4"
+                      placeholder="Enter book description"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="publisher" class="form-label">Publisher</label>
+            <input type="text" class="form-control" id="publisher" formControlName="publisher" placeholder="Enter publisher">
+          </div>
+          <div class="d-grid">
+            <button class="btn btn-primary btn-lg" type="submit" [disabled]="!bookUpdateForm.valid">Update Book</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
