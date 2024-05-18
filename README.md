@@ -10,7 +10,7 @@ This project is built using Angular 16, Express, and MongoDB to create a full-fe
 - **Statistics Visualization**: View various statistics through charts created with Ngx Charts.
 - **Responsive Design**: Uses Bootstrap and Angular Flex Layout for a responsive and user-friendly interface.
 
-## Upcoming Features
+## Fix and Upcoming Features
 
 - **Search Functionality**: Implement a search feature to quickly find books in the table.
 - **Data Deletion**: Fix the issue of data duplication when viewing an Excel file by adding the option to delete table data.
